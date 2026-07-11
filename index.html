@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
@@ -205,6 +205,27 @@
       .estado-form {
         margin-top: 12px;
         font-weight: 700;
+      }
+      .mensaje-validacion {
+        display: none;
+        margin: 0 0 16px;
+        padding: 14px 16px;
+        border-radius: 10px;
+        background: #ffebee;
+        border-left: 6px solid #d32f2f;
+        color: #b71c1c;
+        font-weight: 800;
+        line-height: 1.35;
+      }
+
+      .mensaje-validacion.activo {
+        display: block;
+      }
+
+      .mensaje-validacion strong {
+        display: block;
+        margin-bottom: 4px;
+        color: #b71c1c;
       }
       @media (max-width: 650px) {
         .grid-form {
@@ -441,7 +462,12 @@
 
         <div
           style="
-            background: linear-gradient(135deg, #fff5f5 0%, #ffffff 45%, #fff8e1 100%);
+            background: linear-gradient(
+              135deg,
+              #fff5f5 0%,
+              #ffffff 45%,
+              #fff8e1 100%
+            );
             padding: clamp(18px, 5vw, 34px);
             border-radius: 14px;
             border: 2px solid #ffcdd2;
@@ -626,15 +652,15 @@
               border: 1px solid #ddd;
             "
           >
-            <h3 style="margin: 0 0 14px; color: #2c3e50;">
+            <h3 style="margin: 0 0 14px; color: #2c3e50">
               Detalle del valor promocional
             </h3>
 
-            <p style="margin: 8px 0; font-size: 16px;">
+            <p style="margin: 8px 0; font-size: 16px">
               <strong>1. Cuota societaria:</strong> $15.000
             </p>
 
-            <p style="margin: 8px 0; font-size: 16px;">
+            <p style="margin: 8px 0; font-size: 16px">
               <strong>2. Curso de adiestramiento canino:</strong> $120.000
             </p>
 
@@ -649,8 +675,8 @@
                 border-radius: 6px;
               "
             >
-              Total promocional a abonar: $135.000. La vacante se reserva únicamente
-              luego de verificar el pago.
+              Total promocional a abonar: $135.000. La vacante se reserva
+              únicamente luego de verificar el pago.
             </p>
           </div>
 
@@ -663,8 +689,8 @@
               font-weight: 700;
             "
           >
-            Luego del 15 de agosto el valor total será $160.000
-            ($145.000 curso + $15.000 cuota societaria).
+            Luego del 15 de agosto el valor total será $160.000 ($145.000 curso
+            + $15.000 cuota societaria).
           </p>
         </div>
 
@@ -911,6 +937,12 @@
         </div>
 
         <div class="modal-body">
+          <div
+            id="mensajeValidacion"
+            class="mensaje-validacion"
+            role="alert"
+          ></div>
+
           <section id="paso1" class="paso-inscripcion activo">
             <h3>1. Datos de quien se inscribe y realiza el pago</h3>
 
@@ -1008,17 +1040,19 @@
 
             <div class="consentimiento">
               <h3>KENNEL CLUB SANTA FE</h3>
+
               <p>
-                <strong
-                  >Solicitud de inscripción — Curso de Adiestramiento Canino,
-                  Grupo G29</strong
-                >
+                <strong>
+                  Solicitud de inscripción — Curso de Adiestramiento Canino,
+                  Grupo G29
+                </strong>
               </p>
 
               <p>
-                Declaro que los datos consignados son verdaderos, que soy mayor
-                de 18 años y que solicito voluntariamente mi inscripción al
-                curso.
+                Declaro que los datos consignados en este formulario son
+                verdaderos, que soy mayor de 18 años y que solicito
+                voluntariamente mi inscripción al Curso de Adiestramiento Canino
+                Grupo G29.
               </p>
 
               <p>
@@ -1029,29 +1063,52 @@
               </p>
 
               <p>
-                La inscripción y la reserva de la vacante quedarán confirmadas
-                únicamente cuando el comprobante haya sido recibido y el ingreso
-                efectivo del dinero haya sido verificado.
+                Declaro conocer que las vacantes del Grupo G29 son limitadas.
+                Por ese motivo, una vez verificado el pago, la inscripción
+                implica la reserva de un cupo específico para la dupla declarada
+                en este formulario, compuesta por la persona inscripta y el
+                perro informado.
               </p>
 
               <p>
-                El ingreso al grupo de WhatsApp también quedará supeditado a la
-                verificación efectiva del pago.
+                La inscripción, la reserva de la vacante y el ingreso al grupo
+                de WhatsApp quedarán confirmados únicamente cuando el
+                comprobante de pago y la copia del consentimiento aceptado hayan
+                sido recibidos, y cuando el ingreso efectivo del dinero haya
+                sido verificado.
               </p>
 
               <div class="alerta-legal">
                 <strong>
-                  La decisión voluntaria de abandonar el curso o dejar de
-                  asistir a las clases no genera obligación para el Kennel Club
-                  Santa Fe de reintegrar las sumas abonadas, salvo cuando la
-                  legislación vigente disponga expresamente lo contrario.
+                  IMPORTANTE: las vacantes son limitadas. Una vez verificado el
+                  pago, se reserva un cupo específico para la dupla inscripta.
+                  La decisión voluntaria de no asistir, abandonar el curso o
+                  cambiar de opinión no genera derecho automático a devolución,
+                  transferencia del cupo ni crédito para futuros cursos.
                 </strong>
               </div>
 
               <p>
-                Comprendo que dejar de asistir implica renunciar voluntariamente
-                a recibir las clases restantes que el Club mantenga a
-                disposición.
+                Una vez confirmada la vacante, la decisión voluntaria de no
+                asistir, abandonar el curso, cambiar de opinión, tener
+                incompatibilidad horaria, dificultades personales, laborales, de
+                traslado o cualquier otra causa ajena a la organización del
+                curso no generará derecho automático a la devolución total o
+                parcial de los importes abonados.
+              </p>
+
+              <p>
+                La inasistencia o el abandono del curso implica la renuncia
+                voluntaria a recibir las clases restantes que el Club mantenga a
+                disposición de la persona inscripta durante el período
+                correspondiente al Grupo G29.
+              </p>
+
+              <p>
+                El cupo reservado es personal para la dupla declarada en este
+                formulario. No será transferible a otra persona, otro perro,
+                otro grupo, otro curso o una edición futura, salvo autorización
+                expresa y excepcional del Kennel Club Santa Fe.
               </p>
 
               <p>
@@ -1239,11 +1296,49 @@
       let ultimoJpgDataUrl = null;
       let ultimoNombreJpg = null;
 
+      function mostrarMensajeValidacion(mensaje) {
+        const contenedor = document.getElementById("mensajeValidacion");
+
+        if (!contenedor) {
+          return;
+        }
+
+        contenedor.innerHTML =
+          "<strong>Revisá los datos ingresados</strong>" +
+          "<span>" +
+          mensaje +
+          "</span>";
+
+        contenedor.classList.add("activo");
+
+        const panel = document.querySelector(".modal-panel");
+
+        if (panel) {
+          panel.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        }
+      }
+
+      function ocultarMensajeValidacion() {
+        const contenedor = document.getElementById("mensajeValidacion");
+
+        if (!contenedor) {
+          return;
+        }
+
+        contenedor.innerHTML = "";
+        contenedor.classList.remove("activo");
+      }
+
       function abrirInscripcion() {
         document.getElementById("modalInscripcion").classList.add("activo");
         document
           .getElementById("modalInscripcion")
           .setAttribute("aria-hidden", "false");
+
+        ocultarMensajeValidacion();
         mostrarPaso(1);
       }
 
@@ -1255,10 +1350,22 @@
       }
 
       function mostrarPaso(numero) {
+        ocultarMensajeValidacion();
+
         document
           .querySelectorAll(".paso-inscripcion")
           .forEach((x) => x.classList.remove("activo"));
+
         document.getElementById("paso" + numero).classList.add("activo");
+
+        const panel = document.querySelector(".modal-panel");
+
+        if (panel) {
+          panel.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        }
       }
 
       function obtenerDatos() {
@@ -1322,10 +1429,11 @@
 
       function irAlConsentimiento() {
         try {
+          ocultarMensajeValidacion();
           validarDatos(obtenerDatos());
           mostrarPaso(2);
         } catch (error) {
-          alert(error.message);
+          mostrarMensajeValidacion(error.message);
         }
       }
 
@@ -1333,6 +1441,8 @@
         const estado = document.getElementById("estadoForm");
 
         try {
+          ocultarMensajeValidacion();
+
           const datos = obtenerDatos();
           validarDatos(datos);
 
@@ -1387,7 +1497,8 @@
           mostrarPaso(3);
         } catch (error) {
           console.error(error);
-          estado.textContent = error.message;
+          estado.textContent = "";
+          mostrarMensajeValidacion(error.message);
         }
       }
 
@@ -1628,7 +1739,16 @@
         });
 
         dibujarTexto(
-          "Declaro que los datos consignados son verdaderos, que soy mayor de 18 años y que solicito voluntariamente mi inscripción al Curso de Adiestramiento Canino Grupo G29.",
+          "Solicitud de inscripción — Curso de Adiestramiento Canino, Grupo G29",
+          {
+            tamanio: 27,
+            negrita: true,
+            color: "#263238",
+          },
+        );
+
+        dibujarTexto(
+          "Declaro que los datos consignados en este formulario son verdaderos, que soy mayor de 18 años y que solicito voluntariamente mi inscripción al Curso de Adiestramiento Canino Grupo G29.",
         );
 
         dibujarTexto(
@@ -1636,19 +1756,31 @@
         );
 
         dibujarTexto(
-          "La inscripción, la reserva de la vacante y el ingreso al grupo de WhatsApp quedarán confirmados únicamente cuando el comprobante haya sido recibido y el ingreso efectivo del dinero haya sido verificado.",
+          "Declaro conocer que las vacantes del Grupo G29 son limitadas. Por ese motivo, una vez verificado el pago, la inscripción implica la reserva de un cupo específico para la dupla declarada en este formulario, compuesta por la persona inscripta y el perro informado.",
+        );
+
+        dibujarTexto(
+          "La inscripción, la reserva de la vacante y el ingreso al grupo de WhatsApp quedarán confirmados únicamente cuando el comprobante de pago y la copia del consentimiento aceptado hayan sido recibidos, y cuando el ingreso efectivo del dinero haya sido verificado.",
         );
 
         dibujarRecuadroLegal(
-          "La decisión voluntaria de abandonar el curso o dejar de asistir a las clases no genera obligación para el Kennel Club Santa Fe de reintegrar las sumas abonadas, salvo cuando la legislación vigente disponga expresamente lo contrario.",
+          "IMPORTANTE: las vacantes son limitadas. Una vez verificado el pago, se reserva un cupo específico para la dupla inscripta. La decisión voluntaria de no asistir, abandonar el curso o cambiar de opinión no genera derecho automático a devolución, transferencia del cupo ni crédito para futuros cursos.",
         );
 
         dibujarTexto(
-          "Comprendo que dejar de asistir implica renunciar voluntariamente a recibir las clases restantes que el Club mantenga a disposición.",
+          "Una vez confirmada la vacante, la decisión voluntaria de no asistir, abandonar el curso, cambiar de opinión, tener incompatibilidad horaria, dificultades personales, laborales, de traslado o cualquier otra causa ajena a la organización del curso no generará derecho automático a la devolución total o parcial de los importes abonados.",
         );
 
         dibujarTexto(
-          "Declaro haber leído el documento completo, comprender su contenido y aceptar voluntariamente estas condiciones antes de efectuar el pago.",
+          "La inasistencia o el abandono del curso implica la renuncia voluntaria a recibir las clases restantes que el Club mantenga a disposición de la persona inscripta durante el período correspondiente al Grupo G29.",
+        );
+
+        dibujarTexto(
+          "El cupo reservado es personal para la dupla declarada en este formulario. No será transferible a otra persona, otro perro, otro grupo, otro curso o una edición futura, salvo autorización expresa y excepcional del Kennel Club Santa Fe.",
+        );
+
+        dibujarTexto(
+          "Declaro haber leído el documento completo, comprender su contenido y aceptar estas condiciones antes de efectuar el pago.",
         );
 
         dibujarSeparador();
@@ -1771,14 +1903,14 @@
 
       function abrirJPGEnNuevaPestana() {
         if (!ultimoJpgDataUrl) {
-          alert("Todavía no hay comprobante JPG generado.");
+          mostrarMensajeValidacion("Todavía no hay comprobante JPG generado.");
           return;
         }
 
         const nuevaVentana = window.open("", "_blank");
 
         if (!nuevaVentana) {
-          alert(
+          mostrarMensajeValidacion(
             "El navegador bloqueó la ventana emergente. Mantené presionada la imagen del comprobante y guardala desde ahí.",
           );
           return;
@@ -1825,7 +1957,7 @@
       }
       function abrirWhatsApp() {
         if (!ultimaInscripcion) {
-          alert("No hay una inscripción generada.");
+          mostrarMensajeValidacion("No hay una inscripción generada.");
           return;
         }
 
