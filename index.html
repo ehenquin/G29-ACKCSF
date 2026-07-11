@@ -1,0 +1,1873 @@
+﻿<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
+    />
+    <title>Info Curso Kennel G29</title>
+
+    <style>
+      /* Optimizaciones externas para que tu bloque luzca perfecto */
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #f4f6f7;
+      }
+
+      /* En pantallas chicas, eliminamos los bordes redondeados para que use todo el ancho */
+      @media (max-width: 900px) {
+        div[style*="max-width: 900px"] {
+          border-radius: 0 !important;
+          box-shadow: none !important;
+        }
+      }
+    </style>
+
+    <style>
+      .modal-inscripcion {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.68);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        z-index: 9999;
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+      .modal-inscripcion.activo {
+        display: flex;
+      }
+      .modal-panel {
+        width: min(760px, 100%);
+        max-height: 92vh;
+        overflow: auto;
+        background: #fff;
+        border-radius: 14px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        color: #263238;
+      }
+
+      .modal-panel h2,
+      .modal-panel h3,
+      .modal-panel p,
+      .modal-panel label,
+      .modal-panel input,
+      .modal-panel textarea,
+      .modal-panel button {
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      .modal-header {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 18px 22px;
+        background: #d32f2f;
+        color: #fff;
+      }
+      .modal-header h2 {
+        margin: 0;
+        font-size: 22px;
+      }
+      .btn-cerrar {
+        border: 0;
+        background: transparent;
+        color: #fff;
+        font-size: 28px;
+        cursor: pointer;
+      }
+      .modal-body {
+        padding: 22px;
+      }
+      .paso-inscripcion {
+        display: none;
+      }
+      .paso-inscripcion.activo {
+        display: block;
+      }
+      .grid-form {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+      .campo {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .campo.full {
+        grid-column: 1/-1;
+      }
+      .campo label {
+        font-weight: 700;
+        color: #333;
+      }
+      .campo input,
+      .campo textarea {
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #cfd8dc;
+        border-radius: 8px;
+        padding: 11px 12px;
+        font: inherit;
+        background: #fff;
+      }
+      .campo input:focus,
+      .campo textarea:focus {
+        outline: 2px solid #ef9a9a;
+        border-color: #d32f2f;
+      }
+      .acciones-form {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        margin-top: 20px;
+      }
+      .btn-form {
+        border: 0;
+        border-radius: 8px;
+        padding: 12px 18px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+      .btn-secundario {
+        background: #eceff1;
+        color: #263238;
+      }
+      .btn-primario {
+        background: #d32f2f;
+        color: #fff;
+      }
+      .btn-whatsapp {
+        background: #25d366;
+        color: #fff;
+      }
+      .fila-alias {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 6px 0;
+      }
+      .btn-copiar-alias {
+        border: 1px solid #0d47a1;
+        border-radius: 7px;
+        background: #ffffff;
+        color: #0d47a1;
+        padding: 7px 10px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+      .consentimiento {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background: #fafafa;
+        padding: 18px;
+        max-height: 48vh;
+        overflow: auto;
+        line-height: 1.55;
+      }
+      .consentimiento h3 {
+        margin-top: 0;
+      }
+      .alerta-legal {
+        background: #ffebee;
+        border-left: 5px solid #d32f2f;
+        padding: 14px;
+        margin: 16px 0;
+      }
+      .check-acepta {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        margin-top: 16px;
+        font-weight: 700;
+      }
+      .check-acepta input {
+        margin-top: 4px;
+        transform: scale(1.25);
+      }
+      .resumen-final {
+        background: #e8f5e9;
+        border-left: 5px solid #43a047;
+        padding: 16px;
+        border-radius: 8px;
+      }
+      .estado-form {
+        margin-top: 12px;
+        font-weight: 700;
+      }
+      @media (max-width: 650px) {
+        .grid-form {
+          grid-template-columns: 1fr;
+        }
+        .campo.full {
+          grid-column: auto;
+        }
+        .modal-body {
+          padding: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      style="
+        font-family: &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif;
+        max-width: 900px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        color: #333333;
+        line-height: 1.6;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+      "
+    >
+      <div
+        style="
+          background-color: #d32f2f;
+          color: white;
+          padding: 30px 20px;
+          text-align: center;
+        "
+      >
+        <h1
+          style="
+            margin: 0;
+            font-size: clamp(20px, 5vw, 28px);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+          "
+        >
+          Info Curso Kennel GRUPO “G29”
+        </h1>
+        <p
+          style="
+            margin: 10px 0 0;
+            font-size: clamp(14px, 4vw, 16px);
+            opacity: 0.9;
+          "
+        >
+          Adiestramiento Canino Kennel Club Santa Fe
+        </p>
+      </div>
+
+      <div style="padding: clamp(20px, 5vw, 40px)">
+        <div style="margin-bottom: 30px">
+          <p style="font-size: 16px; margin-bottom: 10px">
+            Hola!<br />
+            Soy <strong>Eduardo Henquín</strong> (<span style="color: #d32f2f"
+              >@ehenquin</span
+            >), el encargado de
+            <strong>Adiestramiento Canino en el Kennel Club Santa Fe</strong>
+            (<span style="color: #d32f2f">@adiestramientocaninokcsf</span>).
+          </p>
+          <p style="font-size: 16px">
+            El Presidente del Club es: <strong>Daniel Velazquez</strong> (<span
+              style="color: #d32f2f"
+              >@Daniel Velazquez</span
+            >).
+          </p>
+        </div>
+
+        <div
+          style="
+            background-color: #fff3cd;
+            border-left: 6px solid #ffc107;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+          "
+        >
+          <p
+            style="
+              margin: 0;
+              font-weight: bold;
+              color: #856404;
+              font-size: 15px;
+            "
+          >
+            ⚠️ ATENCIÓN:
+          </p>
+          <p style="margin: 5px 0 0">
+            Si al leer <strong>TODO</strong> el documento deseas tomar el curso,
+            al final encontrarás la forma de pago y el link para escribirme. El
+            curso comienza cuando se inscriban
+            <strong>15 duplas. ANTES NO.</strong>.
+          </p>
+        </div>
+
+        <div
+          style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 40px"
+        >
+          <div
+            style="
+              flex: 1;
+              min-width: 250px;
+              background: #f8f9fa;
+              padding: 20px;
+              border-radius: 8px;
+              border-top: 4px solid #d32f2f;
+            "
+          >
+            <h3 style="margin-top: 0; color: #d32f2f">📅 Inicio Estimado</h3>
+            <p style="font-size: 18px; font-weight: bold">
+              SEPTIEMBRE - OCTUBRE 2026
+            </p>
+            <p style="font-size: 13px; color: #666">
+              (Sujeto a conformación del cupo)
+            </p>
+          </div>
+          <div
+            style="
+              flex: 1;
+              min-width: 250px;
+              background: #f8f9fa;
+              padding: 20px;
+              border-radius: 8px;
+              border-top: 4px solid #d32f2f;
+            "
+          >
+            <h3 style="margin-top: 0; color: #d32f2f">🕒 Horario Sábados</h3>
+            <p style="font-size: 18px; font-weight: bold">14:00 a 18:00 hs</p>
+            <p style="font-size: 13px; color: #666">
+              (50 min por clase. Se define según clima)
+            </p>
+          </div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0" />
+
+        <h2
+          style="
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+          "
+        >
+          ℹ️ Información del Curso
+        </h2>
+        <p style="font-size: 14px; color: #d32f2f; font-weight: bold">
+          LEER CON ATENCIÓN PARA EVITAR CONSULTAS INNECESARIAS.
+        </p>
+
+        <ul style="list-style: none; padding: 0">
+          <li style="padding: 12px 0; border-bottom: 1px solid #f1f1f1">
+            📍 <strong>Lugar:</strong> Kennel Club Santa Fe (<a
+              href="https://goo.gl/maps/rEgZUmpbfA3ePeF19"
+              target="_blank"
+              style="color: #0066cc"
+              >Ver en Maps</a
+            >).
+          </li>
+          <li style="padding: 12px 0; border-bottom: 1px solid #f1f1f1">
+            📚 <strong>Duración:</strong> 10 clases presenciales.
+          </li>
+          <li style="padding: 12px 0; border-bottom: 1px solid #f1f1f1">
+            ⛔ <strong>Receso:</strong> Enero SIN clases.
+          </li>
+          <li style="padding: 12px 0; border-bottom: 1px solid #f1f1f1">
+            📱 <strong>Inscripción:</strong> Únicamente por WhatsApp.
+          </li>
+        </ul>
+
+        <div style="margin-top: 40px">
+          <h2
+            style="
+              color: #2c3e50;
+              border-bottom: 2px solid #eee;
+              padding-bottom: 10px;
+            "
+          >
+            ⛓️ Requisitos Excluyentes
+          </h2>
+          <p
+            style="
+              background: #ffebee;
+              color: #c62828;
+              padding: 10px;
+              font-weight: bold;
+              border-radius: 4px;
+            "
+          >
+            SIN ESTO NO SE INGRESA A PISTA.
+          </p>
+
+          <div style="margin: 20px 0">
+            <h3 style="margin-bottom: 5px">1. Collar de Corrección</h3>
+            <p>
+              Debe ser de eslabones <strong>RETORCIDOS y SOLDADOS</strong>.
+              Ajustado (sobrante max 4cm).
+            </p>
+
+            <div style="margin: 20px 0; text-align: center">
+              <img
+                src="https://i.postimg.cc/5NrT6wZ1/Collares.jpg"
+                alt="Foto Collar Correcto"
+                style="
+                  max-width: 100%;
+                  height: auto;
+                  border: 1px solid #ddd;
+                  border-radius: 8px;
+                  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                "
+              />
+              <p style="font-size: 12px; color: #666; margin-top: 5px">
+                *Imagen de referencia del collar obligatorio
+              </p>
+            </div>
+
+            <h3 style="margin-bottom: 5px">2. Correa</h3>
+            <p>Tela o cuero, 1.5 metros.</p>
+          </div>
+
+          <p>
+            <strong>3. Estado del Perro:</strong> Debe asistir en
+            <strong>AYUNAS</strong>.
+          </p>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0" />
+
+        <div
+          style="
+            background: linear-gradient(135deg, #fff5f5 0%, #ffffff 45%, #fff8e1 100%);
+            padding: clamp(18px, 5vw, 34px);
+            border-radius: 14px;
+            border: 2px solid #ffcdd2;
+            box-shadow: 0 8px 24px rgba(211, 47, 47, 0.14);
+            position: relative;
+            overflow: hidden;
+          "
+        >
+          <div
+            style="
+              position: absolute;
+              top: 18px;
+              right: -42px;
+              background: #d32f2f;
+              color: white;
+              padding: 8px 48px;
+              transform: rotate(35deg);
+              font-weight: 900;
+              font-size: 13px;
+              letter-spacing: 0.5px;
+              box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+            "
+          >
+            PROMO
+          </div>
+
+          <h2
+            style="
+              color: #2c3e50;
+              margin: 0 0 8px;
+              text-align: center;
+              font-size: clamp(24px, 5vw, 34px);
+            "
+          >
+            💰 Valor del Curso
+          </h2>
+
+          <p
+            style="
+              text-align: center;
+              margin: 0 0 22px;
+              color: #d32f2f;
+              font-weight: 900;
+              font-size: clamp(16px, 4vw, 22px);
+            "
+          >
+            🔥 PROMO INSCRIPCIÓN ANTICIPADA HASTA EL 15 DE AGOSTO
+          </p>
+
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+              gap: 18px;
+              align-items: stretch;
+              margin: 20px 0;
+            "
+          >
+            <div
+              style="
+                background: #ffffff;
+                border: 3px solid #d32f2f;
+                border-radius: 14px;
+                padding: 22px;
+                text-align: center;
+                box-shadow: 0 6px 0 #b71c1c;
+              "
+            >
+              <p
+                style="
+                  margin: 0 0 8px;
+                  font-weight: 900;
+                  color: #d32f2f;
+                  letter-spacing: 1px;
+                  font-size: 15px;
+                "
+              >
+                PRECIO PROMOCIONAL
+              </p>
+
+              <p
+                style="
+                  margin: 0;
+                  font-size: clamp(42px, 9vw, 62px);
+                  line-height: 1;
+                  font-weight: 1000;
+                  color: #212121;
+                "
+              >
+                $135.000
+              </p>
+
+              <p
+                style="
+                  margin: 12px 0 0;
+                  font-size: 14px;
+                  color: #555;
+                  font-weight: 800;
+                "
+              >
+                Hasta el 15 de agosto inclusive
+              </p>
+            </div>
+
+            <div
+              style="
+                background: #263238;
+                color: #ffffff;
+                border-radius: 14px;
+                padding: 22px;
+                text-align: center;
+                box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+              "
+            >
+              <p
+                style="
+                  margin: 0 0 8px;
+                  font-weight: 900;
+                  color: #ffcc80;
+                  letter-spacing: 1px;
+                  font-size: 15px;
+                "
+              >
+                PRECIO LUEGO DEL 15/08
+              </p>
+
+              <p
+                style="
+                  margin: 0;
+                  font-size: clamp(34px, 8vw, 50px);
+                  line-height: 1;
+                  font-weight: 1000;
+                  color: #ffffff;
+                  text-decoration: line-through;
+                  text-decoration-thickness: 4px;
+                  text-decoration-color: #ef5350;
+                "
+              >
+                $160.000
+              </p>
+
+              <p
+                style="
+                  margin: 12px 0 0;
+                  font-size: 14px;
+                  color: #eceff1;
+                  font-weight: 700;
+                "
+              >
+                Precio regular vigente
+              </p>
+            </div>
+          </div>
+
+          <div
+            style="
+              background: #e8f5e9;
+              border-left: 6px solid #43a047;
+              padding: 16px 18px;
+              border-radius: 10px;
+              margin: 24px 0;
+              text-align: center;
+            "
+          >
+            <p
+              style="
+                margin: 0;
+                font-size: clamp(18px, 4vw, 26px);
+                font-weight: 1000;
+                color: #1b5e20;
+              "
+            >
+              ✅ Inscribiéndote antes del 15/08 ahorrás $25.000
+            </p>
+          </div>
+
+          <div
+            style="
+              background: white;
+              padding: 20px;
+              border-radius: 10px;
+              border: 1px solid #ddd;
+            "
+          >
+            <h3 style="margin: 0 0 14px; color: #2c3e50;">
+              Detalle del valor promocional
+            </h3>
+
+            <p style="margin: 8px 0; font-size: 16px;">
+              <strong>1. Cuota societaria:</strong> $15.000
+            </p>
+
+            <p style="margin: 8px 0; font-size: 16px;">
+              <strong>2. Curso de adiestramiento canino:</strong> $120.000
+            </p>
+
+            <p
+              style="
+                margin: 18px 0 0;
+                padding: 14px;
+                background: #ffebee;
+                border-left: 5px solid #d32f2f;
+                color: #b71c1c;
+                font-weight: 900;
+                border-radius: 6px;
+              "
+            >
+              Total promocional a abonar: $135.000. La vacante se reserva únicamente
+              luego de verificar el pago.
+            </p>
+          </div>
+
+          <p
+            style="
+              margin: 18px 0 0;
+              text-align: center;
+              font-size: 13px;
+              color: #666;
+              font-weight: 700;
+            "
+          >
+            Luego del 15 de agosto el valor total será $160.000
+            ($145.000 curso + $15.000 cuota societaria).
+          </p>
+        </div>
+
+        <div style="margin-top: 40px">
+          <h2 style="color: #2c3e50">📲 Cómo Inscribirse</h2>
+
+          <div
+            style="
+              background: #e8f5e9;
+              padding: 20px;
+              border-left: 5px solid #4caf50;
+              border-radius: 4px;
+            "
+          >
+            <h3 style="margin: 0 0 18px; color: #1b5e20; text-align: center">
+              Pasos para completar la inscripción
+            </h3>
+
+            <div
+              style="
+                display: grid;
+                gap: 16px;
+                background: #ffffff;
+                border: 1px solid #c8e6c9;
+                border-radius: 10px;
+                padding: 20px;
+              "
+            >
+              <div style="display: flex; gap: 12px; align-items: flex-start">
+                <div
+                  style="
+                    min-width: 34px;
+                    height: 34px;
+                    border-radius: 50%;
+                    background: #d32f2f;
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: bold;
+                  "
+                >
+                  1
+                </div>
+
+                <div>
+                  <strong>Completá el formulario de inscripción</strong>
+                  <p style="margin: 4px 0 0; color: #555">
+                    Ingresá tus datos personales y los datos del perro.
+                  </p>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 12px; align-items: flex-start">
+                <div
+                  style="
+                    min-width: 34px;
+                    height: 34px;
+                    border-radius: 50%;
+                    background: #d32f2f;
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: bold;
+                  "
+                >
+                  2
+                </div>
+
+                <div>
+                  <strong>Leé y aceptá las condiciones</strong>
+                  <p style="margin: 4px 0 0; color: #555">
+                    Revisá el consentimiento antes de confirmar la inscripción.
+                  </p>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 12px; align-items: flex-start">
+                <div
+                  style="
+                    min-width: 34px;
+                    height: 34px;
+                    border-radius: 50%;
+                    background: #d32f2f;
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: bold;
+                  "
+                >
+                  3
+                </div>
+
+                <div>
+                  <strong>Descargá tu comprobante de inscripción</strong>
+                  <p style="margin: 4px 0 0; color: #555">
+                    Se descargará una imagen JPG con tus datos y las condiciones
+                    aceptadas. Guardala porque deberás enviarla por WhatsApp.
+                  </p>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 12px; align-items: flex-start">
+                <div
+                  style="
+                    min-width: 34px;
+                    height: 34px;
+                    border-radius: 50%;
+                    background: #d32f2f;
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: bold;
+                  "
+                >
+                  4
+                </div>
+
+                <div>
+                  <strong>Realizá la transferencia</strong>
+                  <p style="margin: 4px 0 0; color: #555">
+                    Los datos bancarios aparecerán después de aceptar el
+                    consentimiento.
+                  </p>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 12px; align-items: flex-start">
+                <div
+                  style="
+                    min-width: 34px;
+                    height: 34px;
+                    border-radius: 50%;
+                    background: #d32f2f;
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: bold;
+                  "
+                >
+                  5
+                </div>
+
+                <div>
+                  <strong>Enviá los dos comprobantes por WhatsApp</strong>
+                  <p style="margin: 4px 0 0; color: #555">
+                    Adjuntá el comprobante de transferencia y la imagen JPG de
+                    inscripción. La vacante se confirma después de verificar el
+                    pago.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 25px">
+              <button
+                type="button"
+                onclick="abrirInscripcion()"
+                style="
+                  background-color: #25d366;
+                  color: white;
+                  padding: 15px 20px;
+                  border: 0;
+                  font-weight: bold;
+                  font-size: clamp(14px, 4vw, 18px);
+                  border-radius: 50px;
+                  display: inline-block;
+                  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                  width: 90%;
+                  max-width: 350px;
+                  cursor: pointer;
+                "
+              >
+                👉 COMPLETAR INSCRIPCIÓN G29
+              </button>
+
+              <p style="font-size: 12px; color: #666; margin-top: 8px">
+                Completá tus datos, aceptá el consentimiento y luego realizá el
+                pago.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 50px">
+          <h2
+            style="
+              color: #2c3e50;
+              border-bottom: 2px solid #eee;
+              padding-bottom: 10px;
+            "
+          >
+            ❓ Reglas y FAQ
+          </h2>
+          <div style="font-size: 15px">
+            <p>
+              <strong>⛔ MALTRATO ANIMAL:</strong> JAMÁS permitimos el castigo
+              físico. Expulsión inmediata y denuncia legal.
+            </p>
+            <p>
+              <strong>👨‍👩‍👧‍👦 Familiares:</strong> Solo entra el guía y el perro.
+              Acompañantes afuera.
+            </p>
+            <p>
+              <strong>🐕 Dos perros:</strong> Obligatorio un guía por perro.
+            </p>
+            <p>
+              <strong>🌧️ Lluvia:</strong> Se avisa en el momento según
+              intensidad.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        style="
+          background-color: #333;
+          color: white;
+          padding: 15px;
+          text-align: center;
+          font-size: 13px;
+        "
+      >
+        &copy; 2026 Kennel Club Santa Fe - Adiestramiento Canino
+      </div>
+    </div>
+
+    <div id="modalInscripcion" class="modal-inscripcion" aria-hidden="true">
+      <div class="modal-panel">
+        <div class="modal-header">
+          <h2>Inscripción Grupo G29</h2>
+          <button
+            type="button"
+            class="btn-cerrar"
+            onclick="cerrarInscripcion()"
+            aria-label="Cerrar"
+          >
+            ×
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <section id="paso1" class="paso-inscripcion activo">
+            <h3>1. Datos de quien se inscribe y realiza el pago</h3>
+
+            <div class="grid-form">
+              <div class="campo">
+                <label for="nombre">Nombre *</label>
+                <input id="nombre" autocomplete="given-name" required />
+              </div>
+
+              <div class="campo">
+                <label for="apellido">Apellido *</label>
+                <input id="apellido" autocomplete="family-name" required />
+              </div>
+
+              <div class="campo">
+                <label for="dni">DNI *</label>
+                <input id="dni" inputmode="numeric" maxlength="9" required />
+              </div>
+
+              <div class="campo">
+                <label for="fechaNacimiento">Fecha de nacimiento *</label>
+                <input id="fechaNacimiento" type="date" required />
+              </div>
+
+              <div class="campo full">
+                <label for="direccion">Dirección completa *</label>
+                <input id="direccion" autocomplete="street-address" required />
+              </div>
+
+              <div class="campo">
+                <label for="localidad">Localidad *</label>
+                <input id="localidad" required />
+              </div>
+
+              <div class="campo">
+                <label for="telefono">Teléfono *</label>
+                <input
+                  id="telefono"
+                  inputmode="tel"
+                  autocomplete="tel"
+                  required
+                />
+              </div>
+
+              <div class="campo full">
+                <label for="email">Correo electrónico *</label>
+                <input id="email" type="email" autocomplete="email" required />
+              </div>
+
+              <div class="campo">
+                <label for="nombrePerro">Nombre del perro *</label>
+                <input id="nombrePerro" required />
+              </div>
+
+              <div class="campo">
+                <label for="raza">Raza *</label>
+                <input id="raza" required />
+              </div>
+
+              <div class="campo">
+                <label for="edadPerro">Edad del perro *</label>
+                <input id="edadPerro" placeholder="Ej.: 2 años" required />
+              </div>
+
+              <div class="campo full">
+                <label for="observacionesPerro">Observaciones del perro</label>
+                <textarea
+                  id="observacionesPerro"
+                  rows="3"
+                  placeholder="Conducta, salud o información importante"
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="acciones-form">
+              <button
+                type="button"
+                class="btn-form btn-secundario"
+                onclick="cerrarInscripcion()"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                class="btn-form btn-primario"
+                onclick="irAlConsentimiento()"
+              >
+                Siguiente
+              </button>
+            </div>
+          </section>
+
+          <section id="paso2" class="paso-inscripcion">
+            <h3>2. Consentimiento y condiciones</h3>
+
+            <div class="consentimiento">
+              <h3>KENNEL CLUB SANTA FE</h3>
+              <p>
+                <strong
+                  >Solicitud de inscripción — Curso de Adiestramiento Canino,
+                  Grupo G29</strong
+                >
+              </p>
+
+              <p>
+                Declaro que los datos consignados son verdaderos, que soy mayor
+                de 18 años y que solicito voluntariamente mi inscripción al
+                curso.
+              </p>
+
+              <p>
+                Declaro conocer que el importe abonado corresponde a la cuota
+                societaria del Kennel Club Santa Fe y al curso de adiestramiento
+                canino, conforme al valor informado al momento de completar esta
+                inscripción.
+              </p>
+
+              <p>
+                La inscripción y la reserva de la vacante quedarán confirmadas
+                únicamente cuando el comprobante haya sido recibido y el ingreso
+                efectivo del dinero haya sido verificado.
+              </p>
+
+              <p>
+                El ingreso al grupo de WhatsApp también quedará supeditado a la
+                verificación efectiva del pago.
+              </p>
+
+              <div class="alerta-legal">
+                <strong>
+                  La decisión voluntaria de abandonar el curso o dejar de
+                  asistir a las clases no genera obligación para el Kennel Club
+                  Santa Fe de reintegrar las sumas abonadas, salvo cuando la
+                  legislación vigente disponga expresamente lo contrario.
+                </strong>
+              </div>
+
+              <p>
+                Comprendo que dejar de asistir implica renunciar voluntariamente
+                a recibir las clases restantes que el Club mantenga a
+                disposición.
+              </p>
+
+              <p>
+                Declaro haber leído el documento completo, comprender su
+                contenido y aceptar estas condiciones antes de efectuar el pago.
+              </p>
+            </div>
+
+            <div
+              style="
+                margin-top: 18px;
+                padding: 16px;
+                background: #e3f2fd;
+                border-left: 5px solid #2196f3;
+                border-radius: 8px;
+              "
+            >
+              <h3 style="margin: 0 0 12px; color: #0d47a1">
+                Datos para realizar la transferencia
+              </h3>
+
+              <p style="margin: 6px 0">
+                <strong>Titular:</strong> Matias Henquin
+              </p>
+
+              <p style="margin: 6px 0">
+                <strong>CBU:</strong> 1430001713041079260012
+              </p>
+
+              <div class="fila-alias">
+                <span><strong>Alias:</strong> matiashenquin</span>
+                <button
+                  type="button"
+                  class="btn-copiar-alias"
+                  onclick="copiarAlias(this)"
+                >
+                  Copiar alias
+                </button>
+              </div>
+
+              <p style="margin: 12px 0 0; font-size: 13px; color: #455a64">
+                La inscripción y el ingreso al grupo de WhatsApp quedarán
+                pendientes hasta que se verifique la acreditación efectiva del
+                pago.
+              </p>
+            </div>
+
+            <label class="check-acepta">
+              <input type="checkbox" id="aceptaConsentimiento" />
+              <span
+                >Leí, comprendí y acepto voluntariamente todas las
+                condiciones.</span
+              >
+            </label>
+
+            <div class="acciones-form">
+              <button
+                type="button"
+                class="btn-form btn-secundario"
+                onclick="mostrarPaso(1)"
+              >
+                Volver
+              </button>
+              <button
+                type="button"
+                class="btn-form btn-primario"
+                onclick="registrarYGenerarJPG()"
+              >
+                Aceptar y continuar
+              </button>
+            </div>
+
+            <div id="estadoForm" class="estado-form"></div>
+          </section>
+
+          <section id="paso3" class="paso-inscripcion">
+            <h3>3. Transferencia y comprobante</h3>
+
+            <div class="resumen-final">
+              <p><strong>La solicitud fue registrada.</strong></p>
+              <p id="idFinal"></p>
+              <p>
+                La vacante todavía está pendiente hasta que se verifique el
+                pago.
+              </p>
+              <p style="margin-top: 10px; font-weight: 700; color: #d32f2f">
+                Primero guardá la imagen JPG del comprobante. Después abrí
+                WhatsApp y adjuntá esa imagen junto con el comprobante de
+                transferencia.
+              </p>
+            </div>
+
+            <div
+              style="
+                margin-top: 18px;
+                background: #e3f2fd;
+                padding: 16px;
+                border-radius: 8px;
+              "
+            >
+              <p><strong>Titular:</strong> Matias Henquin</p>
+              <p><strong>CBU:</strong> 1430001713041079260012</p>
+              <div class="fila-alias">
+                <span><strong>Alias:</strong> matiashenquin</span>
+                <button
+                  type="button"
+                  class="btn-copiar-alias"
+                  onclick="copiarAlias(this)"
+                >
+                  Copiar alias
+                </button>
+              </div>
+            </div>
+
+            <div
+              id="contenedorJpgGenerado"
+              style="
+                display: none;
+                margin-top: 18px;
+                padding: 14px;
+                background: #fff8e1;
+                border: 1px solid #ffe082;
+                border-radius: 10px;
+              "
+            >
+              <p style="margin: 0 0 10px; font-weight: 800; color: #5d4037">
+                Comprobante de inscripción generado
+              </p>
+
+              <p style="margin: 0 0 12px; color: #5d4037">
+                Desde el celular, mantené presionada la imagen para guardarla o
+                compartirla. Luego adjuntala en WhatsApp junto con el
+                comprobante de transferencia.
+              </p>
+
+              <img
+                id="previewJpgInscripcion"
+                alt="Comprobante de inscripción G29"
+                style="
+                  display: block;
+                  width: 100%;
+                  max-height: 420px;
+                  object-fit: contain;
+                  border: 1px solid #ddd;
+                  border-radius: 8px;
+                  background: #ffffff;
+                "
+              />
+            </div>
+
+            <div class="acciones-form">
+              <button
+                type="button"
+                class="btn-form btn-secundario"
+                onclick="abrirJPGEnNuevaPestana()"
+              >
+                Abrir JPG para guardar
+              </button>
+              <button
+                type="button"
+                class="btn-form btn-whatsapp"
+                onclick="abrirWhatsApp()"
+              >
+                Enviar JPG y comprobante por WhatsApp
+              </button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const APP_CONFIG = {
+        API_URL:
+          "https://script.google.com/macros/s/AKfycbyt0qHj-alLBy5UAdHKXpgOURpZKIOe7aPjwoOI07JC2RBmmEDToxH6fqF-WM8GEfWl/exec",
+        GRUPO: "G29",
+        VERSION_CONSENTIMIENTO: "G29-2026-V1",
+        WHATSAPP: "5493424307388", // REEMPLAZAR por el número real, sin +, espacios ni guiones
+        IMPORTE_CUOTA: 15000,
+        IMPORTE_CURSO: 120000,
+        IMPORTE_TOTAL: 135000,
+      };
+
+      let ultimaInscripcion = null;
+      let ultimoJpgDataUrl = null;
+      let ultimoNombreJpg = null;
+
+      function abrirInscripcion() {
+        document.getElementById("modalInscripcion").classList.add("activo");
+        document
+          .getElementById("modalInscripcion")
+          .setAttribute("aria-hidden", "false");
+        mostrarPaso(1);
+      }
+
+      function cerrarInscripcion() {
+        document.getElementById("modalInscripcion").classList.remove("activo");
+        document
+          .getElementById("modalInscripcion")
+          .setAttribute("aria-hidden", "true");
+      }
+
+      function mostrarPaso(numero) {
+        document
+          .querySelectorAll(".paso-inscripcion")
+          .forEach((x) => x.classList.remove("activo"));
+        document.getElementById("paso" + numero).classList.add("activo");
+      }
+
+      function obtenerDatos() {
+        return {
+          nombre: document.getElementById("nombre").value.trim(),
+          apellido: document.getElementById("apellido").value.trim(),
+          dni: document.getElementById("dni").value.replace(/\D/g, ""),
+          fechaNacimiento: document.getElementById("fechaNacimiento").value,
+          direccion: document.getElementById("direccion").value.trim(),
+          localidad: document.getElementById("localidad").value.trim(),
+          telefono: document.getElementById("telefono").value.trim(),
+          email: document.getElementById("email").value.trim(),
+          nombrePerro: document.getElementById("nombrePerro").value.trim(),
+          raza: document.getElementById("raza").value.trim(),
+          edadPerro: document.getElementById("edadPerro").value.trim(),
+          observacionesPerro: document
+            .getElementById("observacionesPerro")
+            .value.trim(),
+          aceptaConsentimiento: document.getElementById("aceptaConsentimiento")
+            .checked,
+        };
+      }
+
+      function validarDatos(datos) {
+        const obligatorios = [
+          ["nombre", "Nombre"],
+          ["apellido", "Apellido"],
+          ["dni", "DNI"],
+          ["fechaNacimiento", "Fecha de nacimiento"],
+          ["direccion", "Dirección"],
+          ["localidad", "Localidad"],
+          ["telefono", "Teléfono"],
+          ["email", "Email"],
+          ["nombrePerro", "Nombre del perro"],
+          ["raza", "Raza"],
+          ["edadPerro", "Edad del perro"],
+        ];
+
+        for (const [campo, etiqueta] of obligatorios) {
+          if (!datos[campo])
+            throw new Error("Falta completar: " + etiqueta + ".");
+        }
+
+        if (!/^\d{7,9}$/.test(datos.dni))
+          throw new Error("El DNI no es válido.");
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(datos.email))
+          throw new Error("El email no es válido.");
+        if (!esMayorDeEdad(datos.fechaNacimiento))
+          throw new Error("No se admiten alumnos menores de 18 años.");
+      }
+
+      function esMayorDeEdad(fechaISO) {
+        const nacimiento = new Date(fechaISO + "T00:00:00");
+        const hoy = new Date();
+        let edad = hoy.getFullYear() - nacimiento.getFullYear();
+        const mes = hoy.getMonth() - nacimiento.getMonth();
+        if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate()))
+          edad--;
+        return edad >= 18;
+      }
+
+      function irAlConsentimiento() {
+        try {
+          validarDatos(obtenerDatos());
+          mostrarPaso(2);
+        } catch (error) {
+          alert(error.message);
+        }
+      }
+
+      async function registrarYGenerarJPG() {
+        const estado = document.getElementById("estadoForm");
+
+        try {
+          const datos = obtenerDatos();
+          validarDatos(datos);
+
+          if (!datos.aceptaConsentimiento) {
+            throw new Error("Debés aceptar el consentimiento para continuar.");
+          }
+
+          estado.textContent = "Registrando inscripción...";
+
+          const respuestaHttp = await fetch(APP_CONFIG.API_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "text/plain;charset=utf-8",
+            },
+            body: JSON.stringify(datos),
+          });
+
+          const respuesta = await respuestaHttp.json();
+
+          if (!respuesta.ok) {
+            throw new Error(
+              respuesta.mensaje || "No se pudo registrar la inscripción.",
+            );
+          }
+
+          ultimaInscripcion = {
+            ...datos,
+            idInscripcion: respuesta.idInscripcion,
+            fechaHora: respuesta.fechaHora,
+          };
+
+          estado.textContent = "Generando comprobante de inscripción...";
+
+          const jpgGenerado = generarJPG(ultimaInscripcion);
+
+          ultimoJpgDataUrl = jpgGenerado.dataUrl;
+          ultimoNombreJpg = jpgGenerado.nombreArchivo;
+          mostrarPreviewJPG();
+
+          document.getElementById("idFinal").innerHTML =
+            "<strong>ID de inscripción:</strong> " +
+            ultimaInscripcion.idInscripcion +
+            "<br><br>" +
+            "Tu comprobante JPG ya fue generado. Ahora guardá la imagen y luego tocá <strong>Enviar JPG y comprobante por WhatsApp</strong>.";
+
+          estado.textContent = "";
+
+          const modal = document.getElementById("modalInscripcion");
+          modal.classList.add("activo");
+          modal.setAttribute("aria-hidden", "false");
+
+          mostrarPaso(3);
+        } catch (error) {
+          console.error(error);
+          estado.textContent = error.message;
+        }
+      }
+
+      function generarJPG(datos) {
+        const ancho = 1240;
+        const altoTrabajo = 6000;
+
+        const canvas = document.createElement("canvas");
+        canvas.width = ancho;
+        canvas.height = altoTrabajo;
+
+        const ctx = canvas.getContext("2d");
+
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, ancho, altoTrabajo);
+
+        const margen = 85;
+        const anchoTexto = ancho - margen * 2;
+        const margenInferior = 120;
+        let y = 0;
+
+        function separarLineas(texto, anchoMaximo) {
+          const palabras = String(texto || "")
+            .split(/\s+/)
+            .filter(Boolean);
+          const lineas = [];
+          let linea = "";
+
+          palabras.forEach((palabra) => {
+            const prueba = linea ? linea + " " + palabra : palabra;
+
+            if (ctx.measureText(prueba).width > anchoMaximo && linea) {
+              lineas.push(linea);
+              linea = palabra;
+            } else {
+              linea = prueba;
+            }
+          });
+
+          if (linea) {
+            lineas.push(linea);
+          }
+
+          return lineas.length ? lineas : [""];
+        }
+
+        function medirTextoMultilinea(
+          texto,
+          tamanio,
+          anchoMaximo,
+          interlineado = 1.35,
+          negrita = false,
+        ) {
+          ctx.font = `${negrita ? "700" : "400"} ${tamanio}px Arial`;
+          const lineas = separarLineas(texto, anchoMaximo);
+          const altoLinea = tamanio * interlineado;
+
+          return {
+            lineas,
+            altoLinea,
+            alturaTotal: lineas.length * altoLinea,
+          };
+        }
+
+        function dibujarTexto(texto, opciones = {}) {
+          const {
+            tamanio = 30,
+            negrita = false,
+            color = "#263238",
+            espacioDespues = 20,
+            interlineado = 1.35,
+            alineacion = "left",
+            anchoMaximo = anchoTexto,
+            x = margen,
+          } = opciones;
+
+          const medicion = medirTextoMultilinea(
+            texto,
+            tamanio,
+            anchoMaximo,
+            interlineado,
+            negrita,
+          );
+
+          ctx.font = `${negrita ? "700" : "400"} ${tamanio}px Arial`;
+          ctx.fillStyle = color;
+          ctx.textAlign = alineacion;
+          ctx.textBaseline = "top";
+
+          medicion.lineas.forEach((linea) => {
+            const textoX = alineacion === "center" ? ancho / 2 : x;
+            ctx.fillText(linea, textoX, y);
+            y += medicion.altoLinea;
+          });
+
+          y += espacioDespues;
+          return medicion;
+        }
+
+        function dibujarDato(etiqueta, valor) {
+          ctx.font = "700 27px Arial";
+          ctx.fillStyle = "#263238";
+          ctx.textAlign = "left";
+          ctx.textBaseline = "top";
+          ctx.fillText(etiqueta, margen, y);
+
+          const anchoEtiqueta = ctx.measureText(etiqueta).width;
+          const xValor = margen + anchoEtiqueta + 12;
+          const anchoValor = ancho - margen - xValor;
+
+          const medicion = medirTextoMultilinea(
+            String(valor || "-"),
+            27,
+            anchoValor,
+            1.35,
+            false,
+          );
+
+          ctx.font = "400 27px Arial";
+          medicion.lineas.forEach((linea, indice) => {
+            ctx.fillText(linea, xValor, y + indice * medicion.altoLinea);
+          });
+
+          y += Math.max(46, medicion.alturaTotal + 12);
+        }
+
+        function dibujarSeparador() {
+          ctx.strokeStyle = "#d7dee2";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(margen, y);
+          ctx.lineTo(ancho - margen, y);
+          ctx.stroke();
+          y += 28;
+        }
+
+        function dibujarRecuadroLegal(texto) {
+          const paddingX = 24;
+          const paddingY = 22;
+          const anchoRecuadro = anchoTexto + 40;
+          const anchoContenido = anchoRecuadro - paddingX * 2 - 10;
+          const medicion = medirTextoMultilinea(
+            texto,
+            28,
+            anchoContenido,
+            1.35,
+            true,
+          );
+          const altoRecuadro = Math.ceil(medicion.alturaTotal + paddingY * 2);
+          const yRecuadro = y;
+
+          ctx.fillStyle = "#ffebee";
+          ctx.fillRect(margen - 20, yRecuadro, anchoRecuadro, altoRecuadro);
+
+          ctx.fillStyle = "#d32f2f";
+          ctx.fillRect(margen - 20, yRecuadro, 10, altoRecuadro);
+
+          y += paddingY;
+          dibujarTexto(texto, {
+            tamanio: 28,
+            negrita: true,
+            color: "#b71c1c",
+            espacioDespues: 0,
+            anchoMaximo: anchoContenido,
+            x: margen - 20 + paddingX,
+          });
+          y = yRecuadro + altoRecuadro + 35;
+        }
+
+        ctx.fillStyle = "#d32f2f";
+        ctx.fillRect(0, 0, ancho, 190);
+
+        y = 40;
+
+        dibujarTexto("KENNEL CLUB SANTA FE", {
+          tamanio: 42,
+          negrita: true,
+          color: "#ffffff",
+          alineacion: "center",
+          espacioDespues: 8,
+        });
+
+        dibujarTexto("COMPROBANTE DE INSCRIPCIÓN — GRUPO G29", {
+          tamanio: 28,
+          negrita: true,
+          color: "#ffffff",
+          alineacion: "center",
+          espacioDespues: 55,
+        });
+
+        y = 235;
+
+        dibujarTexto("DATOS DE QUIEN SE INSCRIBE Y REALIZA EL PAGO", {
+          tamanio: 30,
+          negrita: true,
+          color: "#d32f2f",
+        });
+
+        dibujarDato("ID de inscripción:", datos.idInscripcion);
+        dibujarDato("Fecha y hora:", datos.fechaHora);
+        dibujarDato("Nombre:", datos.nombre);
+        dibujarDato("Apellido:", datos.apellido);
+        dibujarDato("DNI:", datos.dni);
+        dibujarDato(
+          "Fecha de nacimiento:",
+          formatearFecha(datos.fechaNacimiento),
+        );
+        dibujarDato("Dirección:", datos.direccion);
+        dibujarDato("Localidad:", datos.localidad);
+        dibujarDato("Teléfono:", datos.telefono);
+        dibujarDato("Email:", datos.email);
+
+        dibujarSeparador();
+
+        dibujarTexto("DATOS DEL PERRO", {
+          tamanio: 30,
+          negrita: true,
+          color: "#d32f2f",
+        });
+
+        dibujarDato("Nombre:", datos.nombrePerro);
+        dibujarDato("Raza:", datos.raza);
+        dibujarDato("Edad:", datos.edadPerro);
+
+        dibujarTexto(
+          "Observaciones: " + (datos.observacionesPerro || "Sin observaciones"),
+          {
+            tamanio: 27,
+          },
+        );
+
+        dibujarSeparador();
+
+        dibujarTexto("CONSENTIMIENTO Y DECLARACIÓN", {
+          tamanio: 30,
+          negrita: true,
+          color: "#d32f2f",
+        });
+
+        dibujarTexto(
+          "Declaro que los datos consignados son verdaderos, que soy mayor de 18 años y que solicito voluntariamente mi inscripción al Curso de Adiestramiento Canino Grupo G29.",
+        );
+
+        dibujarTexto(
+          "Declaro conocer que el importe abonado corresponde a la cuota societaria del Kennel Club Santa Fe y al curso de adiestramiento canino, conforme al valor informado al momento de completar esta inscripción.",
+        );
+
+        dibujarTexto(
+          "La inscripción, la reserva de la vacante y el ingreso al grupo de WhatsApp quedarán confirmados únicamente cuando el comprobante haya sido recibido y el ingreso efectivo del dinero haya sido verificado.",
+        );
+
+        dibujarRecuadroLegal(
+          "La decisión voluntaria de abandonar el curso o dejar de asistir a las clases no genera obligación para el Kennel Club Santa Fe de reintegrar las sumas abonadas, salvo cuando la legislación vigente disponga expresamente lo contrario.",
+        );
+
+        dibujarTexto(
+          "Comprendo que dejar de asistir implica renunciar voluntariamente a recibir las clases restantes que el Club mantenga a disposición.",
+        );
+
+        dibujarTexto(
+          "Declaro haber leído el documento completo, comprender su contenido y aceptar voluntariamente estas condiciones antes de efectuar el pago.",
+        );
+
+        dibujarSeparador();
+
+        dibujarTexto("DATOS DE TRANSFERENCIA", {
+          tamanio: 30,
+          negrita: true,
+          color: "#0d47a1",
+        });
+
+        dibujarDato("Titular:", "Matias Henquin");
+        dibujarDato("CBU:", "1430001713041079260012");
+        dibujarDato("Alias:", "matiashenquin");
+
+        dibujarSeparador();
+
+        dibujarTexto("ACEPTACIÓN ELECTRÓNICA", {
+          tamanio: 30,
+          negrita: true,
+          color: "#d32f2f",
+        });
+
+        dibujarDato("Aceptación:", "SÍ");
+        dibujarDato("Nombre completo:", datos.nombre + " " + datos.apellido);
+        dibujarDato("DNI:", datos.dni);
+        dibujarDato("Fecha y hora:", datos.fechaHora);
+        dibujarDato("Versión:", APP_CONFIG.VERSION_CONSENTIMIENTO);
+
+        dibujarTexto(
+          "IMPORTANTE: enviá esta imagen por WhatsApp junto con el comprobante de transferencia.",
+          {
+            tamanio: 28,
+            negrita: true,
+            color: "#d32f2f",
+            espacioDespues: 25,
+          },
+        );
+
+        dibujarTexto(
+          "La vacante y el ingreso al grupo de WhatsApp permanecen pendientes hasta que el pago sea verificado.",
+          {
+            tamanio: 26,
+            negrita: true,
+          },
+        );
+
+        const altoFinal = Math.ceil(y + margenInferior);
+
+        const canvasFinal = document.createElement("canvas");
+        canvasFinal.width = ancho;
+        canvasFinal.height = altoFinal;
+
+        const ctxFinal = canvasFinal.getContext("2d");
+
+        ctxFinal.fillStyle = "#ffffff";
+        ctxFinal.fillRect(0, 0, ancho, altoFinal);
+        ctxFinal.drawImage(
+          canvas,
+          0,
+          0,
+          ancho,
+          altoFinal,
+          0,
+          0,
+          ancho,
+          altoFinal,
+        );
+
+        const nombreArchivo =
+          "Comprobante_Inscripcion_" +
+          datos.idInscripcion +
+          "_" +
+          datos.apellido.replace(/\s+/g, "_") +
+          ".jpg";
+
+        return {
+          dataUrl: canvasFinal.toDataURL("image/jpeg", 0.95),
+          nombreArchivo,
+        };
+      }
+      function mostrarPreviewJPG() {
+        const contenedor = document.getElementById("contenedorJpgGenerado");
+        const imagen = document.getElementById("previewJpgInscripcion");
+
+        if (!contenedor || !imagen || !ultimoJpgDataUrl) {
+          return;
+        }
+
+        imagen.src = ultimoJpgDataUrl;
+        contenedor.style.display = "block";
+      }
+
+      async function copiarAlias(boton) {
+        const textoOriginal = boton.textContent;
+
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText("matiashenquin");
+          } else {
+            throw new Error("Clipboard no disponible");
+          }
+        } catch (error) {
+          const textarea = document.createElement("textarea");
+          textarea.value = "matiashenquin";
+          textarea.setAttribute("readonly", "");
+          textarea.style.position = "fixed";
+          textarea.style.left = "-9999px";
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand("copy");
+          textarea.remove();
+        }
+
+        boton.textContent = "Copiado ✓";
+
+        setTimeout(() => {
+          boton.textContent = textoOriginal;
+        }, 1800);
+      }
+
+      function abrirJPGEnNuevaPestana() {
+        if (!ultimoJpgDataUrl) {
+          alert("Todavía no hay comprobante JPG generado.");
+          return;
+        }
+
+        const nuevaVentana = window.open("", "_blank");
+
+        if (!nuevaVentana) {
+          alert(
+            "El navegador bloqueó la ventana emergente. Mantené presionada la imagen del comprobante y guardala desde ahí.",
+          );
+          return;
+        }
+
+        nuevaVentana.document.open();
+
+        const html =
+          "<!doctype html>" +
+          "<html lang='es'>" +
+          "<head>" +
+          "<meta charset='UTF-8'>" +
+          "<title>Comprobante de inscripción G29</title>" +
+          "<style>" +
+          "body{" +
+          "margin:0;" +
+          "padding:20px;" +
+          "background:#f4f6f7;" +
+          "font-family:Arial,sans-serif;" +
+          "text-align:center;" +
+          "}" +
+          "img{" +
+          "max-width:100%;" +
+          "height:auto;" +
+          "background:white;" +
+          "border:1px solid #ddd;" +
+          "}" +
+          "p{" +
+          "font-size:16px;" +
+          "color:#333;" +
+          "}" +
+          "</style>" +
+          "</head>" +
+          "<body>" +
+          "<p>Guardá esta imagen y adjuntala por WhatsApp junto con el comprobante de transferencia.</p>" +
+          "<img src='" +
+          ultimoJpgDataUrl +
+          "' alt='Comprobante de inscripción G29'>" +
+          "</body>" +
+          "</html>";
+
+        nuevaVentana.document.write(html);
+        nuevaVentana.document.close();
+      }
+      function abrirWhatsApp() {
+        if (!ultimaInscripcion) {
+          alert("No hay una inscripción generada.");
+          return;
+        }
+
+        const d = ultimaInscripcion;
+
+        const mensaje = `Hola Eduardo, completé mi inscripción al Curso de Adiestramiento Canino Grupo G29.
+
+Mi nombre: ${d.nombre} ${d.apellido}
+Mi perro: ${d.nombrePerro}
+ID de inscripción: ${d.idInscripcion}
+
+A continuación voy a adjuntar:
+
+1. El comprobante de transferencia.
+2. La imagen JPG de mi comprobante de inscripción.
+
+Comprendo que la vacante y el ingreso al grupo de WhatsApp quedan pendientes hasta que se verifique el pago.`;
+
+        const urlWhatsApp =
+          "https://wa.me/5493424307388?text=" + encodeURIComponent(mensaje);
+
+        window.open(urlWhatsApp, "_blank");
+      }
+
+      function formatearFecha(fechaISO) {
+        const [a, m, d] = fechaISO.split("-");
+        return `${d}/${m}/${a}`;
+      }
+
+      document
+        .getElementById("modalInscripcion")
+        .addEventListener("click", function (e) {
+          if (e.target === this) {
+            cerrarInscripcion();
+          }
+        });
+
+      document
+        .querySelector(".modal-panel")
+        .addEventListener("click", function (e) {
+          e.stopPropagation();
+        });
+    </script>
+  </body>
+</html>
