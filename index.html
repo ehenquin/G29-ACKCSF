@@ -227,6 +227,102 @@
         margin-bottom: 4px;
         color: #b71c1c;
       }
+
+      .confirmacion-app {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+        background: rgba(0, 0, 0, 0.72);
+        align-items: center;
+        justify-content: center;
+        padding: 18px;
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      .confirmacion-app.activo {
+        display: flex;
+      }
+
+      .confirmacion-panel {
+        width: min(560px, 100%);
+        background: #ffffff;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+      }
+
+      .confirmacion-header {
+        background: #d32f2f;
+        color: #ffffff;
+        padding: 18px 22px;
+      }
+
+      .confirmacion-header h3 {
+        margin: 0;
+        font-size: 22px;
+      }
+
+      .confirmacion-body {
+        padding: 22px;
+        color: #263238;
+        line-height: 1.45;
+      }
+
+      .confirmacion-body p {
+        margin: 0 0 12px;
+        font-size: 17px;
+      }
+
+      .confirmacion-destacado {
+        padding: 14px 16px;
+        margin: 14px 0;
+        background: #ffebee;
+        border-left: 6px solid #d32f2f;
+        color: #b71c1c;
+        font-weight: 900;
+        font-size: 18px;
+        text-transform: uppercase;
+      }
+
+      .confirmacion-acciones {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        padding: 0 22px 22px;
+      }
+
+      .btn-confirmacion-no {
+        border: 0;
+        border-radius: 8px;
+        padding: 12px 16px;
+        background: #eceff1;
+        color: #263238;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .btn-confirmacion-si {
+        border: 0;
+        border-radius: 8px;
+        padding: 12px 16px;
+        background: #d32f2f;
+        color: #ffffff;
+        font-weight: 900;
+        cursor: pointer;
+      }
+
+      @media (max-width: 650px) {
+        .confirmacion-acciones {
+          flex-direction: column-reverse;
+        }
+
+        .btn-confirmacion-no,
+        .btn-confirmacion-si {
+          width: 100%;
+        }
+      }
       @media (max-width: 650px) {
         .grid-form {
           grid-template-columns: 1fr;
@@ -294,7 +390,10 @@
             (<span style="color: #d32f2f">@adiestramientocaninokcsf</span>).
           </p>
           <p style="font-size: 16px">
-            El Presidente del Club es: <strong>Daniel Velazquez</strong> (<span
+            El Presidente del <strong>KENNEL CLUB SANTA FE</strong> (<span
+              style="color: #d32f2f"
+              >@kennelclubsfe</span
+            >) es: <strong>Daniel Velazquez</strong> (<span
               style="color: #d32f2f"
               >@Daniel Velazquez</span
             >).
@@ -1175,7 +1274,7 @@
               <button
                 type="button"
                 class="btn-form btn-primario"
-                onclick="registrarYGenerarJPG()"
+                onclick="iniciarConfirmacionesAntesDeRegistrar()"
               >
                 Aceptar y continuar
               </button>
@@ -1195,9 +1294,10 @@
                 pago.
               </p>
               <p style="margin-top: 10px; font-weight: 700; color: #d32f2f">
-                Primero guardá la imagen JPG del comprobante. Después abrí
-                WhatsApp y adjuntá esa imagen junto con el comprobante de
-                transferencia.
+                La app intentó guardar automáticamente la imagen JPG del
+                formulario. Antes de tocar WhatsApp, verificá que tengas
+                guardados o listos para enviar: el comprobante de transferencia
+                y la imagen JPG del formulario de inscripción.
               </p>
             </div>
 
@@ -1239,9 +1339,9 @@
               </p>
 
               <p style="margin: 0 0 12px; color: #5d4037">
-                Desde el celular, mantené presionada la imagen para guardarla o
-                compartirla. Luego adjuntala en WhatsApp junto con el
-                comprobante de transferencia.
+                Si el JPG no se guardó automáticamente, mantené presionada esta
+                imagen para guardarla o compartirla. Luego adjuntala en WhatsApp
+                junto con el comprobante de transferencia.
               </p>
 
               <img
@@ -1276,6 +1376,91 @@
               </button>
             </div>
           </section>
+        </div>
+      </div>
+    </div>
+
+    <div id="confirmacionPago" class="confirmacion-app" aria-hidden="true">
+      <div class="confirmacion-panel">
+        <div class="confirmacion-header">
+          <h3>Confirmación de pago</h3>
+        </div>
+
+        <div class="confirmacion-body">
+          <div class="confirmacion-destacado">
+            NO SE TOMAN INSCRIPCIONES SIN HABER HECHO EL PAGO ANTES.
+          </div>
+
+          <p>
+            Si hiciste el pago, guardá el comprobante de transferencia porque
+            vas a tener que enviarlo por WhatsApp.
+          </p>
+
+          <p>¿Querés continuar?</p>
+        </div>
+
+        <div class="confirmacion-acciones">
+          <button
+            type="button"
+            class="btn-confirmacion-no"
+            onclick="cancelarConfirmacionPago()"
+          >
+            No, no quiero continuar. Vuelvo al formulario.
+          </button>
+
+          <button
+            type="button"
+            class="btn-confirmacion-si"
+            onclick="confirmarPagoRealizado()"
+          >
+            Sí, quiero continuar, porque ya hice el pago.
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="confirmacionJPG" class="confirmacion-app" aria-hidden="true">
+      <div class="confirmacion-panel">
+        <div class="confirmacion-header">
+          <h3>Comprobante de inscripción</h3>
+        </div>
+
+        <div class="confirmacion-body">
+          <div class="confirmacion-destacado">
+            TAMBIÉN VAS A TENER QUE GUARDAR EL FORMULARIO DE INSCRIPCIÓN.
+          </div>
+
+          <p>
+            Sin la imagen JPG del formulario de inscripción, aunque tengas el
+            pago, la inscripción no se toma como completa.
+          </p>
+
+          <p>Tenés que enviar por WhatsApp ambas cosas:</p>
+
+          <p>
+            <strong>1.</strong> Comprobante de transferencia.<br />
+            <strong>2.</strong> Imagen JPG del formulario de inscripción.
+          </p>
+
+          <p>¿Querés continuar?</p>
+        </div>
+
+        <div class="confirmacion-acciones">
+          <button
+            type="button"
+            class="btn-confirmacion-no"
+            onclick="cancelarConfirmacionJPG()"
+          >
+            No, no voy a continuar. Vuelvo al formulario.
+          </button>
+
+          <button
+            type="button"
+            class="btn-confirmacion-si"
+            onclick="confirmarEnvioAmbosComprobantes()"
+          >
+            Sí, voy a continuar y voy a enviar ambas cosas.
+          </button>
         </div>
       </div>
     </div>
@@ -1437,6 +1622,65 @@
         }
       }
 
+      function abrirConfirmacionApp(id) {
+        const modal = document.getElementById(id);
+
+        if (!modal) {
+          return;
+        }
+
+        modal.classList.add("activo");
+        modal.setAttribute("aria-hidden", "false");
+      }
+
+      function cerrarConfirmacionApp(id) {
+        const modal = document.getElementById(id);
+
+        if (!modal) {
+          return;
+        }
+
+        modal.classList.remove("activo");
+        modal.setAttribute("aria-hidden", "true");
+      }
+
+      function iniciarConfirmacionesAntesDeRegistrar() {
+        try {
+          ocultarMensajeValidacion();
+
+          const datos = obtenerDatos();
+          validarDatos(datos);
+
+          if (!datos.aceptaConsentimiento) {
+            throw new Error("Debés aceptar el consentimiento para continuar.");
+          }
+
+          abrirConfirmacionApp("confirmacionPago");
+        } catch (error) {
+          mostrarMensajeValidacion(error.message);
+        }
+      }
+
+      function cancelarConfirmacionPago() {
+        cerrarConfirmacionApp("confirmacionPago");
+        mostrarPaso(2);
+      }
+
+      function confirmarPagoRealizado() {
+        cerrarConfirmacionApp("confirmacionPago");
+        abrirConfirmacionApp("confirmacionJPG");
+      }
+
+      function cancelarConfirmacionJPG() {
+        cerrarConfirmacionApp("confirmacionJPG");
+        mostrarPaso(2);
+      }
+
+      function confirmarEnvioAmbosComprobantes() {
+        cerrarConfirmacionApp("confirmacionJPG");
+        registrarYGenerarJPG();
+      }
+
       async function registrarYGenerarJPG() {
         const estado = document.getElementById("estadoForm");
 
@@ -1495,6 +1739,10 @@
           modal.setAttribute("aria-hidden", "false");
 
           mostrarPaso(3);
+
+          setTimeout(() => {
+            intentarGuardarJPGAutomaticamente();
+          }, 600);
         } catch (error) {
           console.error(error);
           estado.textContent = "";
@@ -1873,6 +2121,41 @@
         contenedor.style.display = "block";
       }
 
+      function intentarGuardarJPGAutomaticamente() {
+        if (!ultimoJpgDataUrl || !ultimoNombreJpg) {
+          return;
+        }
+
+        const modal = document.getElementById("modalInscripcion");
+
+        try {
+          const enlace = document.createElement("a");
+          enlace.href = ultimoJpgDataUrl;
+          enlace.download = ultimoNombreJpg;
+          enlace.style.display = "none";
+
+          document.body.appendChild(enlace);
+          enlace.click();
+          enlace.remove();
+
+          if (modal) {
+            modal.classList.add("activo");
+            modal.setAttribute("aria-hidden", "false");
+          }
+
+          mostrarPaso(3);
+        } catch (error) {
+          console.error("No se pudo guardar automáticamente el JPG:", error);
+
+          if (modal) {
+            modal.classList.add("activo");
+            modal.setAttribute("aria-hidden", "false");
+          }
+
+          mostrarPaso(3);
+        }
+      }
+
       async function copiarAlias(boton) {
         const textoOriginal = boton.textContent;
 
@@ -1969,12 +2252,12 @@ Mi nombre: ${d.nombre} ${d.apellido}
 Mi perro: ${d.nombrePerro}
 ID de inscripción: ${d.idInscripcion}
 
-A continuación voy a adjuntar:
+Ya realicé el pago y a continuación voy a adjuntar:
 
 1. El comprobante de transferencia.
-2. La imagen JPG de mi comprobante de inscripción.
+2. La imagen JPG de mi formulario de inscripción.
 
-Comprendo que la vacante y el ingreso al grupo de WhatsApp quedan pendientes hasta que se verifique el pago.`;
+Comprendo que la inscripción, la vacante y el ingreso al grupo de WhatsApp quedan pendientes hasta que se reciban ambos comprobantes y se verifique el ingreso efectivo del dinero.`;
 
         const urlWhatsApp =
           "https://wa.me/5493424307388?text=" + encodeURIComponent(mensaje);
